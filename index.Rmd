@@ -21,16 +21,16 @@ library(hrbrthemes)
 library(sparkline)
 library(plotly)
 library(htmlwidgets)
-source("../Functions/functions2.R")
+source("./Functions/functions2.R")
 ```
 
 ```{r Reading in our picks files, include=FALSE}
-week_1 = read_csv("../CSV_Data_Files/2020 NFL Week 1.csv")
-week_2 = read_csv("../CSV_Data_Files/2020 NFL Week 2.csv")
-week_3 = read_csv("../CSV_Data_Files/2020 NFL Week 3.csv")
-cadet_wk1 = read_csv("../CSV_Data_Files/2020 NFL Week 1 MA206.csv")
-cadet_wk2 = read_csv("../CSV_Data_Files/2020 NFL Week 2 MA206.csv")
-cadet_wk3 = read_csv("../CSV_Data_Files/2020 NFL Week 3 MA206.csv")
+week_1 = read_csv("./CSV_Data_Files/2020 NFL Week 1.csv")
+week_2 = read_csv("./CSV_Data_Files/2020 NFL Week 2.csv")
+week_3 = read_csv("./CSV_Data_Files/2020 NFL Week 3.csv")
+cadet_wk1 = read_csv("./CSV_Data_Files/2020 NFL Week 1 MA206.csv")
+cadet_wk2 = read_csv("./CSV_Data_Files/2020 NFL Week 2 MA206.csv")
+cadet_wk3 = read_csv("./CSV_Data_Files/2020 NFL Week 3 MA206.csv")
 
 weeks = list(1,2,3) #Setting the weeks #add in additional weeks
 inst.picks = list(week_1, week_2, week_3) #add in the additional weeks
@@ -38,7 +38,7 @@ cdt.picks = list(cadet_wk1, cadet_wk2, cadet_wk3) #add in the additional weeks
 ```
 
 ```{r read in scores clean data, include=FALSE}
-Scores = read_csv("../CSV_Data_Files/NFL_Scores_3.csv") #%>% janitor::clean_names()
+Scores = read_csv("./CSV_Data_Files/NFL_Scores_3.csv") #%>% janitor::clean_names()
 
 #Cleaning the data and getting a total list of winners
 Scores = cleaning2(Scores)
