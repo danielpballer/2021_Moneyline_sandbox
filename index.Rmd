@@ -296,6 +296,10 @@ indiv_table = indiv_disp_2 %>% gt() %>%
       map(indiv_disp_2$plot, ggplot_image, height = px(30), aspect_ratio = 4)
                  }) %>%
   cols_hide(c(plot))
+
+indiv_winners = indiv_disp_2 %>% filter(Percent == max(Percent)) %>% select(Name) %>% pull()
+indiv_season = indiv_disp_2 %>% filter(`Season Percent` == max(`Season Percent`)) %>% select(Name) %>% pull()
+indiv_season_adj = indiv_disp_2 %>% filter(`Adj Season Percent` == max(`Adj Season Percent`)) %>% select(Name) %>% pull()
 ```
 
 ```{r instructor formattable, echo=FALSE}
@@ -588,6 +592,10 @@ c_indiv_table = c_indiv_disp_2 %>%
       map(c_indiv_disp_2$plot, ggplot_image, height = px(30), aspect_ratio = 4)
                  }) %>%
   cols_hide(c(plot))
+
+c_indiv_winners = c_indiv_disp_2 %>% filter(Percent == max(Percent)) %>% select(Name) %>% pull()
+c_indiv_season = c_indiv_disp_2 %>% filter(`Season Percent` == max(`Season Percent`)) %>% select(Name) %>% pull()
+c_indiv_season_adj = c_indiv_disp_2 %>% filter(`Adj Season Percent` == max(`Adj Season Percent`)) %>% select(Name) %>% pull()
 ```
 
 ```{r cadet formattable, echo=FALSE}
@@ -848,7 +856,25 @@ inst_group_season_plot
 Instructor Individual Predictions
 ==========================================================================
 
-Column {.tabset}
+Row 
+--------------------------------------
+
+### Best picks of the week
+```{r}
+valueBox(value = indiv_winners,icon = "fa-user-plus",caption = "Best Picks of the Week",color = "green")
+```
+
+### Best picks of the season
+```{r}
+valueBox(value = indiv_season,icon = "fa-user-plus",caption = "Season Leader",color = "green")
+```
+
+### Best picks of the season adjusted
+```{r}
+valueBox(value = indiv_season_adj,icon = "fa-user-plus",caption = "Adjusted Season Leader",color = "green")
+```
+
+row {.tabset}
 --------------------------------------
 
 ### Individual Table
@@ -864,7 +890,7 @@ indiv_table_2
 
 ### Individual Plots
 ```{r, out.width="100%"}
-inst_indiv_plots
+ggplotly(inst_indiv_plots)
 ```
 
 ### Individual Plots2
@@ -924,6 +950,24 @@ c_group_plot
 Cadet Individual Predictions
 ==========================================================================
 
+Row 
+--------------------------------------
+
+### Best picks of the week
+```{r}
+valueBox(value = c_indiv_winners,icon = "fa-user-plus",caption = "Best Picks of the Week",color = "green")
+```
+
+### Best picks of the season
+```{r}
+valueBox(value = c_indiv_season,icon = "fa-user-plus",caption = "Season Leader",color = "green")
+```
+
+### Best picks of the season adjusted
+```{r}
+valueBox(value = c_indiv_season_adj,icon = "fa-user-plus",caption = "Adjusted Season Leader",color = "green")
+```
+
 Column {.tabset}
 --------------------------------------
 
@@ -940,7 +984,7 @@ c_out
 
 ### Cadet Individual Plots
 ```{r, out.width="100%", out.height="100%"}
-c_indiv_plot
+ggplotly(c_indiv_plot)
 ```
 
 Combined Group Predictions
