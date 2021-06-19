@@ -2,12 +2,17 @@
 title: "2021 NFL Moneyline Picks"
 output: 
   flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+      bootswatch: superhero
     orientation: rows
     vertical_layout: fill
+
 ---
 
 
 ```{r setup, include=FALSE}
+#    source_code: embed
 library(flexdashboard)
 library(tidyverse)
 library(data.table)
@@ -22,6 +27,8 @@ library(sparkline)
 library(plotly)
 library(htmlwidgets)
 source("./Functions/functions2.R")
+
+thematic::thematic_rmd(font = "auto")
 ```
 
 ```{r Reading in our picks files, include=FALSE}
@@ -811,30 +818,45 @@ Instructor Group Predictions
 Row
 --------------------------------------
 
-### Weekly %
+### Win percentage for the week
 
 ```{r}
-valueBox(value = weekly_win_percentage[[length(weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+inst_rate <- weekly_win_percentage[[length(weekly_win_percentage)]]*100
+gauge(inst_rate, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
 ```
 
-### Season Percent
 ```{r}
-valueBox(value = season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
+#valueBox(value = weekly_win_percentage[[length(weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+```
+
+### Season Win Percentage
+
+```{r}
+inst_season <- season_win_percentage*100
+gauge(inst_season, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
+```
+
+```{r}
+#valueBox(value = season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
 ```
 
 ### Games Picked
 ```{r}
-valueBox(value = season_games,icon = "fa-user-plus",caption = "Games Picked this Season",color = "green")
+valueBox(value = season_games,icon = "fa-clipboard-list",caption = "Games Picked this Season")
 ```
 
 ### Games Correct
 ```{r}
-valueBox(value = season_wins,icon = "fa-user-plus",caption = "Correct Games this Season",color = "green")
+valueBox(value = season_wins,icon = "fa-trophy-star",caption = "Correct Games this Season")
 ```
 
-### Games Correct
+### Number of predictions
 ```{r}
-valueBox(value = Total,icon = "fa-user-plus",caption = "Predictions this week",color = "green")
+valueBox(value = Total,icon = "fa-users",caption = "Predictions this week")
 ```
 
 
@@ -856,6 +878,35 @@ inst_group_season_plot
 Instructor Individual Predictions
 ==========================================================================
 
+
+Sidebar {.sidebar} 
+-------------------------------------
+
+### Best Picks of the Week.
+
+<font size="4">
+
+ `r indiv_winners`
+ 
+ </font>
+ 
+### Best Season Correct Percentage
+<font size="4">
+
+`r indiv_season`
+ 
+ </font>
+
+### Best Adjusted Season Correct Percentage
+<font size="4">
+
+`r indiv_season_adj`
+
+ * Adjusted season percentage accounts for the number of weeks picked.
+ 
+ </font>
+
+<!--
 Row 
 --------------------------------------
 
@@ -873,6 +924,8 @@ valueBox(value = indiv_season,icon = "fa-user-plus",caption = "Season Leader",co
 ```{r}
 valueBox(value = indiv_season_adj,icon = "fa-user-plus",caption = "Adjusted Season Leader",color = "green")
 ```
+
+-->
 
 row {.tabset}
 --------------------------------------
@@ -905,15 +958,30 @@ Cadet Group Predictions
 Row
 --------------------------------------
 
-### Weekly %
+### Win percentage for the week
 
 ```{r}
-valueBox(value = c_weekly_win_percentage[[length(c_weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+cadet_rate <- c_weekly_win_percentage[[length(c_weekly_win_percentage)]]*100
+gauge(cadet_rate, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
 ```
 
-### Season Percent
 ```{r}
-valueBox(value = c_season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
+#valueBox(value = c_weekly_win_percentage[[length(c_weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+```
+
+### Season Win Percent
+
+```{r}
+cadet_season <- c_season_win_percentage*100
+gauge(cadet_season, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
+```
+
+```{r}
+#valueBox(value = c_season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
 ```
 
 ### Games Picked
@@ -950,6 +1018,34 @@ c_group_plot
 Cadet Individual Predictions
 ==========================================================================
 
+Sidebar {.sidebar} 
+-------------------------------------
+
+### Best Picks of the Week.
+
+<font size="4">
+
+ `r c_indiv_winners`
+ 
+ </font>
+ 
+### Best Season Correct Percentage
+<font size="4">
+
+`r c_indiv_season`
+ 
+ </font>
+
+### Best Adjusted Season Correct Percentage
+<font size="4">
+
+`r c_indiv_season_adj`
+
+ * Adjusted season percentage accounts for the number of weeks picked.
+ 
+ </font>
+ 
+<!-- 
 Row 
 --------------------------------------
 
@@ -967,6 +1063,8 @@ valueBox(value = c_indiv_season,icon = "fa-user-plus",caption = "Season Leader",
 ```{r}
 valueBox(value = c_indiv_season_adj,icon = "fa-user-plus",caption = "Adjusted Season Leader",color = "green")
 ```
+
+-->
 
 Column {.tabset}
 --------------------------------------
@@ -987,21 +1085,37 @@ c_out
 ggplotly(c_indiv_plot)
 ```
 
-Combined Group Predictions
+Combined Predictions
 ==========================================================================
 
 Row
 --------------------------------------
 
-### Weekly %
+### Win percentage for the week
 
 ```{r}
-valueBox(value = comb_weekly_win_percentage[[length(comb_weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+comb_rate <- comb_weekly_win_percentage[[length(comb_weekly_win_percentage)]]*100
+gauge(comb_rate, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
 ```
 
-### Season Percent
 ```{r}
-valueBox(value = comb_season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
+#valueBox(value = comb_weekly_win_percentage[[length(comb_weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+```
+
+### Season Win Percent
+
+```{r}
+comb_season <- comb_season_win_percentage*100
+gauge(comb_season, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
+```
+
+
+```{r}
+#valueBox(value = comb_season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
 ```
 
 ### Games Picked
@@ -1035,21 +1149,36 @@ comb_table
 comb_plot
 ```
 
-Matched Group Predictions
+Matched Predictions
 ==========================================================================
 
 Row
 --------------------------------------
 
-### Weekly %
+### Win percentage for the week
 
 ```{r}
-valueBox(value = matched_weekly_win_percentage[[length(matched_weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+matched_rate <- matched_weekly_win_percentage[[length(matched_weekly_win_percentage)]]*100
+gauge(matched_rate, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
 ```
 
-### Season Percent
 ```{r}
-valueBox(value = matched_season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
+#valueBox(value = matched_weekly_win_percentage[[length(matched_weekly_win_percentage)]],icon = "fa-user-plus",caption = "Win percentage for the week.",color = "green")
+```
+
+### Season Win Percent
+
+```{r}
+matched_season <- matched_season_win_percentage*100
+gauge(matched_season, min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(55, 100), warning = c(40, 54), danger = c(0, 39)
+))
+```
+
+```{r}
+#valueBox(value = matched_season_win_percentage,icon = "fa-user-plus",caption = "Season win percentage.",color = "green")
 ```
 
 ### Games Picked
