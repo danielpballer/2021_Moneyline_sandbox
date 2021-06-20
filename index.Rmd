@@ -850,7 +850,7 @@ valueBox(value = season_games,icon = "fa-clipboard-list",caption = "Games Picked
 
 ### Games Correct
 ```{r}
-valueBox(value = season_wins,icon = "fa-trophy-star",caption = "Correct Games this Season")
+valueBox(value = season_wins,icon = "fa-trophy",caption = "Correct Games this Season")
 ```
 
 ### Number of predictions
@@ -911,17 +911,17 @@ Row
 
 ### Best picks of the week
 ```{r}
-valueBox(value = indiv_winners,icon = "fa-user-plus",caption = "Best Picks of the Week",color = "green")
+valueBox(value = indiv_winners,icon = "fa-clipboard-list",caption = "Best Picks of the Week")
 ```
 
 ### Best picks of the season
 ```{r}
-valueBox(value = indiv_season,icon = "fa-user-plus",caption = "Season Leader",color = "green")
+valueBox(value = indiv_season,icon = "fa-trophy",caption = "Season Leader")
 ```
 
 ### Best picks of the season adjusted
 ```{r}
-valueBox(value = indiv_season_adj,icon = "fa-user-plus",caption = "Adjusted Season Leader",color = "green")
+valueBox(value = indiv_season_adj,icon = "fa-users",caption = "Adjusted Season Leader")
 ```
 
 -->
@@ -985,17 +985,17 @@ gauge(cadet_season, min = 0, max = 100, symbol = '%', gaugeSectors(
 
 ### Games Picked
 ```{r}
-valueBox(value = c_season_games,icon = "fa-user-plus",caption = "Games Picked this Season",color = "green")
+valueBox(value = c_season_games,icon = "fa-clipboard-list",caption = "Games Picked this Season")
 ```
 
 ### Games Correct
 ```{r}
-valueBox(value = c_season_wins,icon = "fa-user-plus",caption = "Correct Games this Season",color = "green")
+valueBox(value = c_season_wins,icon = "fa-trophy",caption = "Correct Games this Season")
 ```
 
-### Games Correct
+### Predictions
 ```{r}
-valueBox(value = c_Total,icon = "fa-user-plus",caption = "Predictions this week",color = "green")
+valueBox(value = c_Total,icon = "fa-users",caption = "Predictions this week")
 ```
 
 
@@ -1050,17 +1050,17 @@ Row
 
 ### Best picks of the week
 ```{r}
-valueBox(value = c_indiv_winners,icon = "fa-user-plus",caption = "Best Picks of the Week",color = "green")
+valueBox(value = c_indiv_winners,icon = "fa-clipboard-list",caption = "Best Picks of the Week")
 ```
 
 ### Best picks of the season
 ```{r}
-valueBox(value = c_indiv_season,icon = "fa-user-plus",caption = "Season Leader",color = "green")
+valueBox(value = c_indiv_season,icon = "fa-trophy",caption = "Season Leader")
 ```
 
 ### Best picks of the season adjusted
 ```{r}
-valueBox(value = c_indiv_season_adj,icon = "fa-user-plus",caption = "Adjusted Season Leader",color = "green")
+valueBox(value = c_indiv_season_adj,icon = "fa-user-plus",caption = "Adjusted Season Leader")
 ```
 
 -->
@@ -1119,17 +1119,17 @@ gauge(comb_season, min = 0, max = 100, symbol = '%', gaugeSectors(
 
 ### Games Picked
 ```{r}
-valueBox(value = comb_season_games,icon = "fa-user-plus",caption = "Games Picked this Season",color = "green")
+valueBox(value = comb_season_games,icon = "fa-clipboard-list",caption = "Games Picked this Season")
 ```
 
 ### Games Correct
 ```{r}
-valueBox(value = comb_season_wins,icon = "fa-user-plus",caption = "Correct Games this Season",color = "green")
+valueBox(value = comb_season_wins,icon = "fa-trophy",caption = "Correct Games this Season")
 ```
 
 ### Games Correct
 ```{r}
-valueBox(value = comb_Total,icon = "fa-user-plus",caption = "Predictions this week",color = "green")
+valueBox(value = comb_Total,icon = "fa-users",caption = "Predictions this week")
 ```
 
 
@@ -1182,12 +1182,12 @@ gauge(matched_season, min = 0, max = 100, symbol = '%', gaugeSectors(
 
 ### Games Picked
 ```{r}
-valueBox(value = matched_season_games,icon = "fa-user-plus",caption = "Games Picked this Season",color = "green")
+valueBox(value = matched_season_games,icon = "fa-clipboard-list",caption = "Games Picked this Season")
 ```
 
 ### Season Games Correct
 ```{r}
-valueBox(value = matched_season_wins,icon = "fa-user-plus",caption = "Correct Games this Season",color = "green")
+valueBox(value = matched_season_wins,icon = "fa-trophy",caption = "Correct Games this Season")
 ```
 
 
