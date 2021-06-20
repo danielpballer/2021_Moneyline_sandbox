@@ -4,10 +4,9 @@ output:
   flexdashboard::flex_dashboard:
     theme:
       version: 4
-      bootswatch: superhero
+      bootswatch: solar
     orientation: rows
     vertical_layout: fill
-
 ---
 
 
