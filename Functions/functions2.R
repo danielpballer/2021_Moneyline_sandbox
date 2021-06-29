@@ -192,6 +192,39 @@ weekly_winners = function(weeks){
     select(winner)
 }
 
+#Creating a list of cbs percentages for each week
+
+cbs_percent = function(weeks){
+  cbs %>% select(week, Percent) %>% 
+    filter(week == weeks) %>%
+    select(Percent)
+}
+
+#Creating a list of cbs experts beat for each week
+
+experts_beat = function(cbs_weekly_percent, weekly_win_percentage){
+  cbs_weekly_percent %>% mutate(beat = case_when(Percent<=weekly_win_percentage~1,
+                                                 TRUE~0)) %>% 
+    summarise(sum(beat))
+}
+
+#Creating a list of number of cbs experts predictions by week
+
+experts_tot = function(cbs_weekly_percent){
+  cbs_weekly_percent %>%
+    mutate(row = row_number()) %>% 
+    filter(row==max(row)) %>% 
+    select(row) %>% pull()
+}
+
+#Creating a list of ESPN percentages for each week
+
+espn_percent = function(weeks){
+  espn %>% select(week, Percent) %>% 
+    filter(week == weeks) %>%
+    select(Percent)
+}
+
 #Creating a list of how many games each week.
 
 week_number_games = function(weeks){

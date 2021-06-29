@@ -45,6 +45,8 @@ cdt.picks = list(cadet_wk1, cadet_wk2, cadet_wk3) #add in the additional weeks
 
 ```{r read in scores clean data, include=FALSE}
 Scores = read_csv("./CSV_Data_Files/NFL_Scores_3.csv") #%>% janitor::clean_names()
+cbs = read_csv("./CSV_Data_Files/CBS_Experts_3.csv")
+espn = read_csv("./CSV_Data_Files/ESPN_Experts_3.csv")
 
 #Cleaning the data and getting a total list of winners
 Scores = cleaning2(Scores)
@@ -148,6 +150,28 @@ ggplot(aes(x = as.factor(Week), y = `Win Percentage`))+
   ggtitle("Weekly Group Correct Percentage")+
   theme_classic()+
   theme(plot.title = element_text(hjust = 0.5, size = 18))
+```
+
+```{r instructor beating cbs, include=FALSE}
+#Creating a list of correct percentages for each week.
+cbs_weekly_percent = map(weeks, cbs_percent)
+
+#Creating a list of how many cbs experts we beat each week.
+cbs_experts_beat = map2(cbs_weekly_percent, weekly_win_percentage, experts_beat)
+
+#Creating a list of how many cbs experts picked each week.  
+cbs_experts_total = map(cbs_weekly_percent, experts_tot)
+```
+
+```{r instructor beating ESPN, include=FALSE}
+#Creating a list of correct percentages for each week.
+espn_weekly_percent = map(weeks, espn_percent)
+
+#Creating a list of how many cbs experts we beat each week.
+espn_experts_beat = map2(espn_weekly_percent, weekly_win_percentage, experts_beat)
+
+#Creating a list of how many cbs experts picked each week.  
+espn_experts_total = map(espn_weekly_percent, experts_tot)
 ```
 
 ```{r individual results, include=FALSE}
@@ -813,6 +837,25 @@ matched_season_wins = sum(unlist(matched_weekly_group_correct_picks))
 
 Instructor Group Predictions
 ==========================================================================
+
+Sidebar {.sidebar} 
+-------------------------------------
+### CBS Sports
+
+<font size="5">
+
+This week we beat or tied `r cbs_experts_beat[[length(weeks)]]` of `r cbs_experts_total[[length(weeks)]]` CBS Sports' Experts.
+ 
+ </font>
+
+
+### ESPN
+
+<font size="5">
+
+We also beat or tied `r espn_experts_beat[[length(weeks)]]` of `r espn_experts_total[[length(weeks)]]` ESPN Experts.
+ 
+ </font>
 
 Row
 --------------------------------------
