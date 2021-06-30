@@ -486,6 +486,16 @@ ggplot(aes(x = as.factor(Week), y = `Win Percentage`))+
   theme(plot.title = element_text(hjust = 0.5, size = 18))
 ```
 
+```{r Cadet beating cbs, include=FALSE}
+#Creating a list of how many cbs experts the cadets beat each week.
+c_cbs_experts_beat = map2(cbs_weekly_percent, c_weekly_win_percentage, experts_beat)
+```
+
+```{r Cadet beating ESPN, include=FALSE}
+#Creating a list of how many cbs experts we beat each week.
+c_espn_experts_beat = map2(espn_weekly_percent, c_weekly_win_percentage, experts_beat)
+```
+
 ```{r cdt individual results, include=FALSE}
 #Creating a list of individual results for each week.
 c_weekly_indiv = pmap(list(cdt.picks, winners, weeks), indiv_weekly_pred)
@@ -756,6 +766,16 @@ ggplot(aes(x = as.factor(Week), y = `Win Percentage`))+
   theme(plot.title = element_text(hjust = 0.5, size = 18))
 ```
 
+```{r Combined beating cbs, include=FALSE}
+#Creating a list of how many cbs experts the cadets beat each week.
+comb_cbs_experts_beat = map2(cbs_weekly_percent, comb_weekly_win_percentage, experts_beat)
+```
+
+```{r Combined beating ESPN, include=FALSE}
+#Creating a list of how many cbs experts we beat each week.
+comb_espn_experts_beat = map2(espn_weekly_percent, comb_weekly_win_percentage, experts_beat)
+```
+
 ```{r matched picks, include=FALSE}
 #Finding where inst and Cadet predictions match
 matched = map2(results, c_results, matched_fn)
@@ -997,6 +1017,25 @@ ggplotly(indiv_plot_comb)
 Cadet Group Predictions
 ==========================================================================
 
+Sidebar {.sidebar} 
+-------------------------------------
+### CBS Sports
+
+<font size="5">
+
+This week we beat or tied `r c_cbs_experts_beat[[length(weeks)]]` of `r cbs_experts_total[[length(weeks)]]` CBS Sports' Experts.
+ 
+ </font>
+
+
+### ESPN
+
+<font size="5">
+
+We also beat or tied `r c_espn_experts_beat[[length(weeks)]]` of `r espn_experts_total[[length(weeks)]]` ESPN Experts.
+ 
+ </font>
+
 Row
 --------------------------------------
 
@@ -1129,6 +1168,25 @@ ggplotly(c_indiv_plot)
 
 Combined Predictions
 ==========================================================================
+
+Sidebar {.sidebar} 
+-------------------------------------
+### CBS Sports
+
+<font size="5">
+
+This week our combined predictions beat or tied `r comb_cbs_experts_beat[[length(weeks)]]` of `r cbs_experts_total[[length(weeks)]]` CBS Sports' Experts.
+ 
+ </font>
+
+
+### ESPN
+
+<font size="5">
+
+Our combined predictions also beat or tied `r comb_espn_experts_beat[[length(weeks)]]` of `r espn_experts_total[[length(weeks)]]` ESPN Experts.
+ 
+ </font>
 
 Row
 --------------------------------------
