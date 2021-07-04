@@ -21,7 +21,7 @@ library(rvest)
 
 # Only thing you need to change (add additional week)
 
-week = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) # List of weeks
+week = list(1,2,3) # List of weeks
 
 url = "https://www.cbssports.com/nfl/schedule/2020/regular/"  #base URL
 
@@ -46,7 +46,7 @@ week%>%
   map(list_of_pages) %>% 
   map2(week,.,scores)%>%
   bind_rows() %>% 
-  write_csv(glue::glue("./CSV_Data_Files/NFL_Scores_{length(week)}.csv"))
+  write_csv(glue::glue("../CSV_Data_Files/NFL_Scores_{length(week)}.csv"))
 ```
 
 
