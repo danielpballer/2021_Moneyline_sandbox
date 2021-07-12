@@ -81,9 +81,12 @@ cdt.picks = list(cadet_wk1, cadet_wk2, cadet_wk3, cadet_wk4, cadet_wk5,
 ```
 
 ```{r read in scores clean data, include=FALSE}
-Scores = read_csv("./CSV_Data_Files/NFL_Scores_17.csv") #%>% janitor::clean_names()
-cbs = read_csv("./CSV_Data_Files/CBS_Experts_17.csv")
-espn = read_csv("./CSV_Data_Files/ESPN_Experts_17.csv")
+current_week = as.numeric(length(weeks))
+Scores = read_csv(glue::glue("./CSV_Data_Files/NFL_Scores_{current_week}.csv")) #%>% janitor::clean_names()
+cbs = read_csv(glue::glue("./CSV_Data_Files/CBS_Experts_{current_week}.csv"))
+cbs_season = read_csv(glue::glue("./CSV_Data_Files/CBS_Experts_Season_{current_week}.csv"))
+espn = read_csv(glue::glue("./CSV_Data_Files/ESPN_Experts_{current_week}.csv"))
+espn_season = read_csv(glue::glue("./CSV_Data_Files/ESPN_Experts_Season_{current_week}.csv"))
 
 #Cleaning the data and getting a total list of winners
 Scores = cleaning2(Scores)
@@ -189,7 +192,7 @@ ggplot(aes(x = as.factor(Week), y = `Win Percentage`))+
   theme(plot.title = element_text(hjust = 0.5, size = 18))
 ```
 
-```{r instructor beating cbs, include=FALSE}
+```{r instructor beating cbs week, include=FALSE}
 #Creating a list of correct percentages for each week.
 cbs_weekly_percent = map(weeks, cbs_percent)
 
@@ -200,7 +203,18 @@ cbs_experts_beat = map2(cbs_weekly_percent, weekly_win_percentage, experts_beat)
 cbs_experts_total = map(cbs_weekly_percent, experts_tot)
 ```
 
-```{r instructor beating ESPN, include=FALSE}
+```{r instructor beating cbs season, include=FALSE}
+#Creating a list of correct percentages for each week.
+cbs_season_percent = map(weeks, cbs_season_percent)
+
+#Creating a list of how many cbs experts we beat each week.
+cbs_experts_beat_season = map2(cbs_season_percent, season_win_percentage, experts_beat)
+
+#Creating a list of how many cbs experts picked each week.  
+cbs_experts_season_total = map(cbs_season_percent, experts_tot)
+```
+
+```{r instructor beating ESPN week, include=FALSE}
 #Creating a list of correct percentages for each week.
 espn_weekly_percent = map(weeks, espn_percent)
 
@@ -209,6 +223,17 @@ espn_experts_beat = map2(espn_weekly_percent, weekly_win_percentage, experts_bea
 
 #Creating a list of how many cbs experts picked each week.  
 espn_experts_total = map(espn_weekly_percent, experts_tot)
+```
+
+```{r instructor beating ESPN season, include=FALSE}
+#Creating a list of correct percentages for each week.
+espn_season_percent = map(weeks, espn_season_percent)
+
+#Creating a list of how many cbs experts we beat each week.
+espn_experts_beat_season = map2(espn_season_percent, season_win_percentage, experts_beat)
+
+#Creating a list of how many cbs experts picked each week.  
+espn_experts_season_total = map(espn_season_percent, experts_tot)
 ```
 
 ```{r individual results, include=FALSE}
@@ -525,14 +550,24 @@ ggplot(aes(x = as.factor(Week), y = `Win Percentage`))+
   theme(plot.title = element_text(hjust = 0.5, size = 18))
 ```
 
-```{r Cadet beating cbs, include=FALSE}
+```{r Cadet beating cbs week, include=FALSE}
 #Creating a list of how many cbs experts the cadets beat each week.
 c_cbs_experts_beat = map2(cbs_weekly_percent, c_weekly_win_percentage, experts_beat)
 ```
 
+```{r cadet beating cbs season, include=FALSE}
+#Creating a list of how many cbs experts the cadets beat for the season.
+c_cbs_experts_beat_season = map2(cbs_season_percent, c_season_win_percentage, experts_beat)
+```
+
 ```{r Cadet beating ESPN, include=FALSE}
-#Creating a list of how many cbs experts we beat each week.
+#Creating a list of how many cbs experts the cadets beat each week.
 c_espn_experts_beat = map2(espn_weekly_percent, c_weekly_win_percentage, experts_beat)
+```
+
+```{r cadet beating ESPN season, include=FALSE}
+#Creating a list of how many cbs experts the cadets beat for the season.
+c_espn_experts_beat_season = map2(espn_season_percent, c_season_win_percentage, experts_beat)
 ```
 
 ```{r cdt individual results, include=FALSE}
@@ -817,13 +852,23 @@ ggplot(aes(x = as.factor(Week), y = `Win Percentage`))+
 ```
 
 ```{r Combined beating cbs, include=FALSE}
-#Creating a list of how many cbs experts the cadets beat each week.
+#Creating a list of how many cbs experts our combined picks beat each week.
 comb_cbs_experts_beat = map2(cbs_weekly_percent, comb_weekly_win_percentage, experts_beat)
+```
+
+```{r combined beating cbs season, include=FALSE}
+#Creating a list of how many cbs experts our combined picks beat for the season.
+comb_cbs_experts_beat_season = map2(cbs_season_percent, comb_season_win_percentage, experts_beat)
 ```
 
 ```{r Combined beating ESPN, include=FALSE}
 #Creating a list of how many cbs experts we beat each week.
 comb_espn_experts_beat = map2(espn_weekly_percent, comb_weekly_win_percentage, experts_beat)
+```
+
+```{r combined beating ESPN season, include=FALSE}
+#Creating a list of how many cbs experts our combined picks beat for the season.
+comb_espn_experts_beat_season = map2(espn_season_percent, comb_season_win_percentage, experts_beat)
 ```
 
 ```{r matched picks, include=FALSE}
@@ -915,6 +960,8 @@ Sidebar {.sidebar}
 <font size="4">
 
 This week we beat or tied `r cbs_experts_beat[[length(weeks)]]` of `r cbs_experts_total[[length(weeks)]]` CBS Sports' Experts.
+
+For the season we are currently beating or tied with `r cbs_experts_beat_season[[length(weeks)]]` of `r cbs_experts_season_total[[length(weeks)]]` CBS Sports' Experts.
  
  </font>
 
@@ -925,7 +972,9 @@ This week we beat or tied `r cbs_experts_beat[[length(weeks)]]` of `r cbs_expert
 
 We also beat or tied `r espn_experts_beat[[length(weeks)]]` of `r espn_experts_total[[length(weeks)]]` ESPN Experts.
  
- </font>
+For the season we are currently beating or tied with `r espn_experts_beat_season[[length(weeks)]]` of `r espn_experts_season_total[[length(weeks)]]` ESPN Experts.
+
+</font>
 
 Row
 --------------------------------------
@@ -1077,7 +1126,9 @@ Sidebar {.sidebar}
 
 This week we beat or tied `r c_cbs_experts_beat[[length(weeks)]]` of `r cbs_experts_total[[length(weeks)]]` CBS Sports' Experts.
  
- </font>
+For the season we are currently beating or tied with `r c_cbs_experts_beat_season[[length(weeks)]]` of `r cbs_experts_season_total[[length(weeks)]]` CBS Sports' Experts.
+
+</font>
 
 
 #### ESPN
@@ -1085,8 +1136,10 @@ This week we beat or tied `r c_cbs_experts_beat[[length(weeks)]]` of `r cbs_expe
 <font size="4">
 
 We also beat or tied `r c_espn_experts_beat[[length(weeks)]]` of `r espn_experts_total[[length(weeks)]]` ESPN Experts.
- 
- </font>
+
+For the season we are currently beating or tied with `r c_espn_experts_beat_season[[length(weeks)]]` of `r espn_experts_season_total[[length(weeks)]]` ESPN Experts.
+
+</font>
 
 Row
 --------------------------------------
@@ -1232,8 +1285,10 @@ Sidebar {.sidebar}
 <font size="4">
 
 This week our combined predictions beat or tied `r comb_cbs_experts_beat[[length(weeks)]]` of `r cbs_experts_total[[length(weeks)]]` CBS Sports' Experts.
- 
- </font>
+
+For the season we are currently beating or tied with `r comb_cbs_experts_beat_season[[length(weeks)]]` of `r cbs_experts_season_total[[length(weeks)]]` CBS Sports' Experts.
+
+</font>
 
 
 #### ESPN
@@ -1241,8 +1296,10 @@ This week our combined predictions beat or tied `r comb_cbs_experts_beat[[length
 <font size="4">
 
 Our combined predictions also beat or tied `r comb_espn_experts_beat[[length(weeks)]]` of `r espn_experts_total[[length(weeks)]]` ESPN Experts.
- 
- </font>
+
+For the season our combined predictions are currently beating or tied with `r comb_espn_experts_beat_season[[length(weeks)]]` of `r espn_experts_season_total[[length(weeks)]]` ESPN Experts.
+
+</font>
 
 Row
 --------------------------------------

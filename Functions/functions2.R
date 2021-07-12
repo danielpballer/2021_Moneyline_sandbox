@@ -200,6 +200,14 @@ cbs_percent = function(weeks){
     select(Percent)
 }
 
+#Creating a list of cbs season percentages for each week
+
+cbs_season_percent = function(weeks){
+  cbs_season %>% select(week, Percent) %>% 
+    filter(week == weeks) %>%
+    select(Percent)
+}
+
 #Creating a list of cbs experts beat for each week
 
 experts_beat = function(cbs_weekly_percent, weekly_win_percentage){
@@ -221,6 +229,14 @@ experts_tot = function(cbs_weekly_percent){
 
 espn_percent = function(weeks){
   espn %>% select(week, Percent) %>% 
+    filter(week == weeks) %>%
+    select(Percent)
+}
+
+#Creating a list of ESPN season percentages for each week
+
+espn_season_percent = function(weeks){
+  espn_season %>% select(week, Percent) %>% 
     filter(week == weeks) %>%
     select(Percent)
 }
