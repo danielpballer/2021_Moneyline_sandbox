@@ -1,5 +1,5 @@
 ---
-title: "2021 NFL Moneyline Picks"
+title: "2020 NFL Moneyline Picks"
 output: 
   flexdashboard::flex_dashboard:
     theme:
@@ -70,18 +70,24 @@ cadet_wk15 = read_csv("./CSV_Data_Files/2020 NFL Week 15 MA206.csv")
 cadet_wk16 = read_csv("./CSV_Data_Files/2020 NFL Week 16 MA206.csv")
 cadet_wk17 = read_csv("./CSV_Data_Files/2020 NFL Week 17 MA206.csv")
 
-weeks = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) #Setting the weeks #add in additional weeks
-inst.picks = list(week_1, week_2, week_3, week_4, week_5, week_6, week_7, week_8,
-                  week_9, week_10, week_11, week_12, week_13, week_14, week_15,
-                  week_16, week_17) #add in the additional weeks
+
+####################UPDATE THESE###############################
+current_week = 17 #Set what week it is
+inst.picks = list(week_1, week_2, week_3, week_4, week_5, week_6, week_7, 
+                  week_8, week_9, week_10, week_11, week_12, week_13, week_14,
+                  week_15, week_16, week_17) #add in the additional weeks
 cdt.picks = list(cadet_wk1, cadet_wk2, cadet_wk3, cadet_wk4, cadet_wk5,
                  cadet_wk6, cadet_wk7, cadet_wk8, cadet_wk9, cadet_wk10,
                  cadet_wk11, cadet_wk12, cadet_wk13, cadet_wk14, cadet_wk15,
                  cadet_wk16, cadet_wk17) #add in the additional weeks
+####################END OF UPDATE##############################
+
+weeks = as.list(seq(1:current_week)) #creating a list of each week number
+
 ```
 
 ```{r read in scores clean data, include=FALSE}
-current_week = as.numeric(length(weeks))
+#current_week = as.numeric(length(weeks))
 Scores = read_csv(glue::glue("./CSV_Data_Files/NFL_Scores_{current_week}.csv")) #%>% janitor::clean_names()
 cbs = read_csv(glue::glue("./CSV_Data_Files/CBS_Experts_{current_week}.csv"))
 cbs_season = read_csv(glue::glue("./CSV_Data_Files/CBS_Experts_Season_{current_week}.csv"))
