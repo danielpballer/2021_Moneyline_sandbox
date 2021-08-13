@@ -10,7 +10,7 @@ output:
     social: ["menu"]
     source_code: embed
     navbar:
-      - { title: "Created by: Daniel Baller", icon: "fa-trophy", href: "https://github.com/danielpballer"  }
+      - { title: "Created by: Daniel Baller", icon: "fa-github", href: "https://github.com/danielpballer"  }
 ---
 
 
